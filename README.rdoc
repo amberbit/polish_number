@@ -1,4 +1,5 @@
 = polish-number
+{<img src="https://codeclimate.com/github/wpiekutowski/polish-number.png" />}[https://codeclimate.com/github/wpiekutowski/polish-number]
 Translates numbers to Polish words
 
 = Installation
