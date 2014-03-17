@@ -1,47 +1,33 @@
-polish_number [![Code Climate](https://codeclimate.com/github/amberbit/polish_number.png)](https://codeclimate.com/github/amberbit/polish_number)
-=============
+# Polish Number
 
-Translates numbers to Polish words
+Translates numbers to Polish words.
 
-Installation
-------------
+## Installation
 
-Tested with Ruby 1.8.7 and 1.9.2.
+Add this line to your application's Gemfile:
 
-```sh
-gem install polish_number
-```
+    gem 'polish_number'
 
-Usage
------
+And then execute:
 
-```Ruby
-require 'polish_number'
+    $ bundle
 
-PolishNumber.translate(1234) #=> tysiąc dwieście trzydzieści cztery
-PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
-PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
-```
+Or install it yourself as:
 
-Running specs
--------------
+    $ gem install polish_number
 
-```Shell
-rake test
-```
+## Usage
 
-TODO
-----
-* currently works for numbers 0-999999. Make it work with millions, billions, etc
-* optional noun pluralization
-* add an executable
+    require 'polish_number'
 
-GitHub
-------
+    PolishNumber.translate(1234) #=> tysiąc dwieście trzydzieści cztery
+    PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
+    PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
 
-http://github.com/amberbit/polish_number
+## Contributing
 
-Credits
--------
-
-polish_number is maintained by [Wojciech Piekutowski](http://piekutowski.net) with support from [AmberBit](http://www.amberbit.com).
+1. Fork it ( http://github.com/amberbit/polish_number/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

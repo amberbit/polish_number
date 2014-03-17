@@ -1,4 +1,4 @@
-# encoding: UTF-8
+require "polish_number/version"
 
 module PolishNumber
   HUNDREDS = ['', 'sto ', 'dwieście ', 'trzysta ', 'czterysta ', 'pięćset ', 'sześćset ',

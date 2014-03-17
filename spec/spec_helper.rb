@@ -1,3 +1,6 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 def silently(&block)
   warn_level = $VERBOSE
   $VERBOSE = nil

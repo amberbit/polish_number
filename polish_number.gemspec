@@ -1,21 +1,24 @@
-$:.push File.expand_path("../lib", __FILE__)
-require "polish_number/version"
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'polish_number/version'
 
-Gem::Specification.new do |s|
-  s.name = "polish_number"
-  s.version = "0.1.0"
-  s.date = "2010-10-04"
-  s.summary = "Translates numbers to Polish words"
-  s.description = s.summary = <<-END
-    Translates numbers to Polish words
-  END
-  s.authors = ["Wojciech Piekutowski"]
-  s.email = "wojciech@piekutowski.net"
-  s.files = ['lib/polish_number.rb']
-  s.homepage = "http://github.com/amberbit/polish_number"
-  s.license = "Ruby 1.8"
+Gem::Specification.new do |spec|
+  spec.name          = "polish_number"
+  spec.version       = PolishNumber::VERSION
+  spec.authors       = ["Wojciech Piekutowski"]
+  spec.email         = ["wojciech@piekutowski.net"]
+  spec.summary       = %q{Translates numbers to Polish words}
+  spec.homepage      = "http://github.com/amberbit/polish_number"
+  spec.license       = "MIT"
 
-  s.add_development_dependency 'rake', '~> 0'
-  s.add_development_dependency 'test-unit', '~> 0'
-  s.add_development_dependency 'test-spec', '~> 0'
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "test-unit"
+  spec.add_development_dependency "test-spec"
 end
