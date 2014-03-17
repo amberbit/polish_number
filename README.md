@@ -1,4 +1,4 @@
-polish-number [![Code Climate](https://codeclimate.com/github/wpiekutowski/polish-number.png)](https://codeclimate.com/github/wpiekutowski/polish-number)
+polish_number [![Code Climate](https://codeclimate.com/github/amberbit/polish_number.png)](https://codeclimate.com/github/amberbit/polish_number)
 =============
 
 Translates numbers to Polish words
@@ -9,7 +9,7 @@ Installation
 Tested with Ruby 1.8.7 and 1.9.2.
 
 ```sh
-gem install polish-number
+gem install polish_number
 ```
 
 Usage
@@ -39,9 +39,9 @@ TODO
 GitHub
 ------
 
-http://github.com/wpiekutowski/polish-number
+http://github.com/amberbit/polish_number
 
 Credits
 -------
 
-polish-number is maintained by [Wojciech Piekutowski](http://piekutowski.net) with support from [AmberBit](http://www.amberbit.com).
+polish_number is maintained by [Wojciech Piekutowski](http://piekutowski.net) with support from [AmberBit](http://www.amberbit.com).

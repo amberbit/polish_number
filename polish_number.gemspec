@@ -1,8 +1,8 @@
 $:.push File.expand_path("../lib", __FILE__)
-require "polish-number/version"
+require "polish_number/version"
 
 Gem::Specification.new do |s|
-  s.name = "polish-number"
+  s.name = "polish_number"
   s.version = "0.1.0"
   s.date = "2010-10-04"
   s.summary = "Translates numbers to Polish words"
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.authors = ["Wojciech Piekutowski"]
   s.email = "wojciech@piekutowski.net"
   s.files = ['lib/polish_number.rb']
-  s.homepage = "http://github.com/wpiekutowski/polish-number"
+  s.homepage = "http://github.com/amberbit/polish_number"
   s.license = "Ruby 1.8"
 
   s.add_development_dependency 'rake', '~> 0'
