@@ -1,20 +1,21 @@
+$:.push File.expand_path("../lib", __FILE__)
+require "polish-number/version"
+
 Gem::Specification.new do |s|
   s.name = "polish-number"
-  s.rubyforge_project = "polish-number"
-  s.homepage = "http://github.com/wpiekutowski/polish-number"
   s.version = "0.1.0"
-  s.authors = ["Wojciech Piekutowski"]
-  s.email = "wojciech@piekutowski.net"
-  s.files = ['lib/polish_number.rb']
+  s.date = "2010-10-04"
+  s.summary = "Translates numbers to Polish words"
   s.description = s.summary = <<-END
     Translates numbers to Polish words
   END
-  s.has_rdoc = true
-  s.extra_rdoc_files = %w{README.rdoc LICENSE COPYING}
-  s.rdoc_options << "--title" << "polish-number documentation" <<
-                    "--main"  << "README.rdoc" << "-q"
+  s.authors = ["Wojciech Piekutowski"]
+  s.email = "wojciech@piekutowski.net"
+  s.files = ['lib/polish_number.rb']
+  s.homepage = "http://github.com/wpiekutowski/polish-number"
+  s.license = "Ruby 1.8"
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'test-unit'
-  s.add_development_dependency 'test-spec'
+  s.add_development_dependency 'rake', '~> 0'
+  s.add_development_dependency 'test-unit', '~> 0'
+  s.add_development_dependency 'test-spec', '~> 0'
 end
