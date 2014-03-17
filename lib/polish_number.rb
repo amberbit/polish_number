@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "polish_number/version"
 
 module PolishNumber
