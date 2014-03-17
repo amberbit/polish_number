@@ -1,7 +1,5 @@
-if RUBY_VERSION > "1.8.7"
-  require "codeclimate-test-reporter"
-  CodeClimate::TestReporter.start
-end
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
 def silently(&block)
   warn_level = $VERBOSE
