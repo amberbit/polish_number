@@ -34,6 +34,7 @@ TODO
 ----
 * currently works for numbers 0-999999. Make it work with millions, billions, etc
 * optional noun pluralization
+* add an executable
 
 GitHub
 ------
