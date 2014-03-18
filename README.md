@@ -1,4 +1,4 @@
-# Polish Number
+# Polish Number [![Code Climate](https://codeclimate.com/github/amberbit/polish_number.png)](https://codeclimate.com/github/amberbit/polish_number)
 
 Translates numbers to Polish words.
 
