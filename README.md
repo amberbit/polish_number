@@ -8,6 +8,8 @@ Add this line to your application's Gemfile:
 
     gem 'polish_number'
 
+Note: in the past known as polish-number (dash instead of an underscore) -- before version 1.0.0. Old repo: https://github.com/wpiekutowski/polish-number
+
 And then execute:
 
     $ bundle
