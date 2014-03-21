@@ -34,4 +34,4 @@ Or install it yourself as:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-[![Analytics](https://ga-beacon.appspot.com/UA-49257773-1/amberbit-polish_number/README.md?pixel)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-49257773-1/README.md?pixel)](https://github.com/igrigorik/ga-beacon)
