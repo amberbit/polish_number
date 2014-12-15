@@ -30,7 +30,9 @@ describe :PolishNumber do
     10000 => 'dziesięć tysięcy',
     22141 => 'dwadzieścia dwa tysiące sto czterdzieści jeden',
     123754 => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery',
-    999999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć'
+    999999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć',
+    1999999 => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć',
+    5123754 => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery'
   }.each do |number, translation|
     it "should translate #{number} to '#{translation}'" do
       PolishNumber.translate(number).should == translation
@@ -81,7 +83,9 @@ describe :PolishNumber do
     10000 => 'dziesięć tysięcy złotych',
     22141 => 'dwadzieścia dwa tysiące sto czterdzieści jeden złotych',
     123754 => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote',
-    999999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych'
+    999999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
+    1999999 => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
+    5123754 => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote'
   }.each do |number, translation|
     it "should translate #{number} to '#{translation}'" do
       PolishNumber.translate(number, :currency => :PLN).should == translation
@@ -92,8 +96,8 @@ describe :PolishNumber do
     lambda { PolishNumber.translate(-1) }.should.raise(ArgumentError)
   end
 
-  it "should raise ArgumentError when number is greater than 999999.99" do
-    lambda { PolishNumber.translate(1_000_000) }.should.raise(ArgumentError)
+  it "should raise ArgumentError when number is greater than 999999999.99" do
+    lambda { PolishNumber.translate(1_000_000_000) }.should.raise(ArgumentError)
   end
 
   it "should raise ArgumentError when currency is unknown" do
