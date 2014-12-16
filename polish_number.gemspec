@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Wojciech Piekutowski"]
   spec.email         = ["wojciech@piekutowski.net"]
   spec.summary       = %q{Translates numbers to Polish words}
-  spec.homepage      = "http://github.com/amberbit/polish_number"
+  spec.homepage      = "https://github.com/amberbit/polish_number"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
