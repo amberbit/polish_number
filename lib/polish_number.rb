@@ -19,6 +19,8 @@ module PolishNumber
 
   THOUSANDS = {:one => 'tysiąc', :few => 'tysiące', :many => 'tysięcy'}
 
+  MILLIONS = {:one => 'milion', :few => 'miliony', :many => 'milionów'}
+
   CURRENCIES = {
     :PLN => {:one => 'złoty', :few => 'złote', :many => 'złotych'}
   }
@@ -30,21 +32,24 @@ module PolishNumber
 
     number = number.to_i
 
-    unless (0..999999).include? number
-      raise ArgumentError, 'number should be in 0..999999 range'
+    unless (0..999999999).include? number
+      raise ArgumentError, 'number should be in 0..999999999 range'
     end
 
     if number == 0
       result = ZERO.dup
     else
-      formatted_number = sprintf('%06.0f', number)
+      formatted_number = sprintf('%09.0f', number)
       digits = formatted_number.chars.map { |char| char.to_i }
 
       result = ''
       result << process_0_999(digits[0..2])
-      result << thousands(number/1000, digits[0..2])
+      result << millions(number/1000000, digits[0..2])
       result << ' '
       result << process_0_999(digits[3..5])
+      result << thousands(number/1000, digits[3..5])
+      result << ' '
+      result << process_0_999(digits[6..9])
       result.strip!
     end
 
@@ -78,6 +83,14 @@ module PolishNumber
       ''
     else
       THOUSANDS[classify(number, digits)]
+    end
+  end
+
+  def self.millions(number, digits)
+    if number == 0
+      ''
+    else
+      MILLIONS[classify(number, digits)]
     end
   end
 
