@@ -7,7 +7,7 @@ require 'polish_number/version'
 Gem::Specification.new do |spec|
   spec.name          = "polish_number"
   spec.version       = PolishNumber::VERSION
-  spec.authors       = ["Wojciech Piekutowski"]
+  spec.authors       = ["Wojciech Piekutowski", "Wacław Łuczak"]
   spec.email         = ["wojciech@piekutowski.net"]
   spec.summary       = %q{Translates numbers to Polish words}
   spec.homepage      = "https://github.com/amberbit/polish_number"
