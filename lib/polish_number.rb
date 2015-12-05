@@ -42,9 +42,8 @@ module PolishNumber
 
   def self.validate_and_options(number, options)
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
-      message =  "Unknown :currency option '#{options[:currency].inspect}'." +
+      raise ArgumentError, "Unknown :currency option '#{options[:currency].inspect}'." +
                   " Choose one from: #{CURRENCIES.inspect}"
-      raise ArgumentError, message
     end
 
     if options[:cents] && !CENTS.include?(options[:cents])
@@ -73,18 +72,7 @@ module PolishNumber
     else
       digits = formatted_number.chars.map { |char| char.to_i }
       digits_i = digits[0..8]
-
-      result = ''
-      result << process_0_999(digits[0..2], number, :number)
-      result << millions(number.to_i/1000000, digits[0..2])
-      result.strip!
-      result << ' '
-      result << process_0_999(digits[3..5], number, :number)
-      result << thousands(number.to_i/1000, digits[3..5])
-      result.strip!
-      result << ' '
-      result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
-      result.strip!
+      result = process_1_999999999(digits, number, currency)
     end
 
     if options[:currency] && !result.empty?
@@ -113,6 +101,20 @@ module PolishNumber
     end
 
     result
+  end
+
+  def self.process_1_999999999(digits, number, currency)
+    result = ''
+    result << process_0_999(digits[0..2], number, :number)
+    result << millions(number.to_i/1000000, digits[0..2])
+    result.strip!
+    result << ' '
+    result << process_0_999(digits[3..5], number, :number)
+    result << thousands(number.to_i/1000, digits[3..5])
+    result.strip!
+    result << ' '
+    result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
+    result.strip!
   end
 
   def self.add_currency(name, hash)
