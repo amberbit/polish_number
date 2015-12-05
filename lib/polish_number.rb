@@ -103,10 +103,6 @@ module PolishNumber
       result << ' '
       result << formatted_number[-2..-1]
       result << '/100'
-    elsif options[:cents] == :digits
-      result << ' '
-      result << formatted_number[-2..-1]
-      result << '/100'
     end
 
     result
