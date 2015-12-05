@@ -40,7 +40,7 @@ module PolishNumber
             :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
   }
 
-  def self.validate_and_options(number, options)
+  def self.validate(number, options)
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
       raise ArgumentError, "Unknown :currency option '#{options[:currency].inspect}'." +
                   " Choose one from: #{CURRENCIES.inspect}"
@@ -51,8 +51,6 @@ module PolishNumber
                   " Choose one from: #{CENTS.inspect}"
     end
 
-    options[:cents] ||= :auto
-
     unless (0..999999999).include? number
       raise ArgumentError, 'number should be in 0..999999999 range'
     end
@@ -61,23 +59,15 @@ module PolishNumber
 
   def self.translate(number, options={})
 
-    options = validate_and_options(number, options)
+    options = validate(number, options)
 
+    options[:cents] ||= :auto
     number = number.to_i if options[:cents]==:no
     formatted_number = sprintf('%012.2f', number)
     currency = CURRENCIES[options[:currency] || :NO]
 
-    if number == 0
-      result = ZERO.dup
-    else
-      digits = formatted_number.chars.map { |char| char.to_i }
-      digits_i = digits[0..8]
-      result = process_1_999999999(digits, number, currency)
-    end
-
-    if options[:currency] && !result.empty?
-      result << ' ' + currency[classify(number.to_i, digits_i)]
-    end
+    digits = formatted_number.chars.map { |char| char.to_i }
+    result = process_1_999999999(digits[0..8], options, number, currency)
 
     process_99_0(result, digits, options, formatted_number[-2..-1], currency)
 
@@ -109,18 +99,27 @@ module PolishNumber
     result
   end
 
-  def self.process_1_999999999(digits, number, currency)
-    result = ''
-    result << process_0_999(digits[0..2], number, :number)
-    result << millions(number.to_i/1000000, digits[0..2])
-    result.strip!
-    result << ' '
-    result << process_0_999(digits[3..5], number, :number)
-    result << thousands(number.to_i/1000, digits[3..5])
-    result.strip!
-    result << ' '
-    result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
-    result.strip!
+  def self.process_1_999999999(digits, options, number, currency)
+    if number == 0
+      result = ZERO.dup
+    else
+      result = ''
+      result << process_0_999(digits[0..2], number, :number)
+      result << millions(number.to_i/1000000, digits[0..2])
+      result.strip!
+      result << ' '
+      result << process_0_999(digits[3..5], number, :number)
+      result << thousands(number.to_i/1000, digits[3..5])
+      result.strip!
+      result << ' '
+      result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
+      result.strip!
+    end
+
+    if options[:currency] && !result.empty?
+      result << ' ' + currency[classify(number.to_i, digits)]
+    end
+    result
   end
 
   def self.process_0_999(digits, number, object)
