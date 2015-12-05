@@ -38,18 +38,18 @@ describe :PolishNumber do
     323 => { :number => 'trzysta dwadzieścia trzy', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     440 => { :number => 'czterysta czterdzieści', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     999 => { :number => 'dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1000 => { :number => 'jeden tysiąc', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1002 => { :number => 'jeden tysiąc dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1011 => { :number => 'jeden tysiąc jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1111 => { :number => 'jeden tysiąc sto jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1222 => { :number => 'jeden tysiąc dwieście dwadzieścia dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1000 => { :number => 'tysiąc', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1002 => { :number => 'tysiąc dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1011 => { :number => 'tysiąc jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1111 => { :number => 'tysiąc sto jedenaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1222 => { :number => 'tysiąc dwieście dwadzieścia dwa', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     2415 => { :number => 'dwa tysiące czterysta piętnaście', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     5000 => { :number => 'pięć tysięcy', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     10000 => { :number => 'dziesięć tysięcy', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     22141 => { :number => 'dwadzieścia dwa tysiące sto czterdzieści jeden', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     123754 => { :number => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     999999 => { :number => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
-    1999999 => { :number => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
+    1999999 => { :number => 'milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć', :PLN => 'złotych', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' },
     5123754 => { :number => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery', :PLN => 'złote', :cents_digital => '00/100', :cents_word => 'zero', :PLN_100 => 'groszy' }
     }.each do |number, translation|
     it "should translate #{number} to '#{translation[:number]}'" do
@@ -122,11 +122,11 @@ describe :PolishNumber do
 
   it "should translate 1_000_002 :with currrency :SEK to milion dwie korony" do
     PolishNumber.translate(1_000_002, :currency => :SEK).should ==
-        "jeden milion dwie korony"
+        "milion dwie korony"
   end
   it "should translate 1_000_001 to milion jeden" do
     PolishNumber.translate(1_000_001).should ==
-        "jeden milion jeden"
+        "milion jeden"
   end
 
   it "should raise ArgumentError when number is smaller than 0" do

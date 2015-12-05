@@ -66,11 +66,11 @@ module PolishNumber
       digits_i = digits[0..8]
 
       result = ''
-      result << process_0_999(digits[0..2], number, :hi)
+      result << process_0_999(digits[0..2], number, :number)
       result << millions(number.to_i/1000000, digits[0..2])
       result.strip!
       result << ' '
-      result << process_0_999(digits[3..5], number, :hi)
+      result << process_0_999(digits[3..5], number, :number)
       result << thousands(number.to_i/1000, digits[3..5])
       result.strip!
       result << ' '
@@ -112,7 +112,7 @@ module PolishNumber
 
   private
 
-  def self.process_0_999(digits, number, gender)
+  def self.process_0_999(digits, number, object)
     result = ''
     result << HUNDREDS[digits[0]]
 
@@ -120,12 +120,14 @@ module PolishNumber
       result << TEENS[digits[2]]
     else
       result << TENS[digits[1]]
-      if digits[2] == 2 && gender == :she
+      if digits[2] == 2 && object == :she
         result << 'dwie '
-      elsif number == 1 && gender == :she
+      elsif number == 1 && object == :she
         result << 'jedna '
-      elsif number == 1 && gender == :it
+      elsif number == 1 && object == :it
         result << 'jedno '
+      elsif digits == [0,0,1] && object == :number
+        result << ''
       else
         result << UNITIES[digits[2]]
       end
