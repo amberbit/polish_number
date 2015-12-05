@@ -41,11 +41,16 @@ module PolishNumber
   }
 
   def self.translate(number, options={})
+
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
-      raise ArgumentError, "unknown :currency option '#{options[:currency].inspect}'. Choose one from: #{CURRENCIES.inspect}"
+      message =  "Unknown :currency option '#{options[:currency].inspect}'." +
+                  " Choose one from: #{CURRENCIES.inspect}"
+      raise ArgumentError, message
     end
+
     if options[:cents] && !CENTS.include?(options[:cents])
-      raise ArgumentError, "unknown :cents option '#{options[:cents].inspect}'. Choose one from: #{CENTS.inspect}"
+      raise ArgumentError, "Unknown :cents option '#{options[:cents].inspect}'." +
+                  " Choose one from: #{CENTS.inspect}"
     end
 
     options[:cents] ||= :auto
@@ -120,20 +125,24 @@ module PolishNumber
       result << TEENS[digits[2]]
     else
       result << TENS[digits[1]]
-      if digits[2] == 2 && object == :she
-        result << 'dwie '
-      elsif number == 1 && object == :she
-        result << 'jedna '
-      elsif number == 1 && object == :it
-        result << 'jedno '
-      elsif digits == [0,0,1] && object == :number
-        result << ''
-      else
-        result << UNITIES[digits[2]]
-      end
+      result << process_0_9(digits, number, object)
     end
 
     result
+  end
+
+  def self.process_0_9(digits, number, object)
+    if digits[2] == 2 && object == :she
+      'dwie '
+    elsif number == 1 && object == :she
+      'jedna '
+    elsif number == 1 && object == :it
+      'jedno '
+    elsif digits == [0,0,1] && object == :number
+      ''
+    else
+      UNITIES[digits[2]]
+    end
   end
 
   def self.thousands(number, digits)
