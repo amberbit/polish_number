@@ -39,7 +39,8 @@ module PolishNumber
     :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :she,
             :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
   }
-  def validate_and_options(number, options{})
+
+  def self.validate_and_options(number, options)
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
       message =  "Unknown :currency option '#{options[:currency].inspect}'." +
                   " Choose one from: #{CURRENCIES.inspect}"
@@ -58,9 +59,10 @@ module PolishNumber
     end
     options
   end
+
   def self.translate(number, options={})
 
-    options = validate_and_options(number, options={})
+    options = validate_and_options(number, options)
 
     number = number.to_i if options[:cents]==:no
     formatted_number = sprintf('%012.2f', number)
