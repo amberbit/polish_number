@@ -39,9 +39,7 @@ module PolishNumber
     :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :she,
             :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
   }
-
-  def self.translate(number, options={})
-
+  def validate_and_options(number, options{})
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
       message =  "Unknown :currency option '#{options[:currency].inspect}'." +
                   " Choose one from: #{CURRENCIES.inspect}"
@@ -55,12 +53,16 @@ module PolishNumber
 
     options[:cents] ||= :auto
 
-    number = number.to_i if options[:cents]==:no
-
     unless (0..999999999).include? number
       raise ArgumentError, 'number should be in 0..999999999 range'
     end
+    options
+  end
+  def self.translate(number, options={})
 
+    options = validate_and_options(number, options={})
+
+    number = number.to_i if options[:cents]==:no
     formatted_number = sprintf('%012.2f', number)
     currency = CURRENCIES[options[:currency] || :NO]
 
