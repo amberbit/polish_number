@@ -25,19 +25,19 @@ module PolishNumber
 
   CURRENCIES = {
     :NO => {:one => '', :few => '', :many => '',
-            :one_100 => 'setna', :few_100 => 'setne', :many_100 => 'setnych'},
+            :one_100 => 'setna', :few_100 => 'setne', :many_100 => 'setnych', :gender_100 => :she},
     :PLN => {:one => 'złoty', :few => 'złote', :many => 'złotych',
             :one_100 => 'grosz', :few_100 => 'grosze', :many_100 => 'groszy'},
     :USD => { :one => 'dolar', :few => 'dolary', :many => 'dolarów',
-      :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
+            :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
     :EUR => { :one => 'euro', :few => 'euro', :many => 'euro', :gender => :it,
-      :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
+            :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
     :GBP => { :one => 'funt', :few => 'funty', :many => 'funtów',
-        :one_100 => 'pens', :few_100 => 'pensy', :many_100 => 'pensów'},
+            :one_100 => 'pens', :few_100 => 'pensy', :many_100 => 'pensów'},
     :CHF => { :one => 'frank', :few => 'franki', :many => 'franków',
-        :one_100 => 'centym', :few_100 => 'centymy', :many_100 => 'centymów'},
+            :one_100 => 'centym', :few_100 => 'centymy', :many_100 => 'centymów'},
     :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :she,
-        :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
+            :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
   }
 
   def self.translate(number, options={})
@@ -104,6 +104,10 @@ module PolishNumber
     end
 
     result
+  end
+
+  def self.add_currency(name, hash)
+    CURRENCIES[name]=hash
   end
 
   private

@@ -141,4 +141,12 @@ describe :PolishNumber do
     lambda { PolishNumber.translate(1_000_000, :currency => :ABC) }.
       should.raise(ArgumentError)
   end
+
+  it "should accept new currencies" do
+    PolishNumber.add_currency(:COWS, { :one => 'krowa', :few => 'krowy', :many => 'krów', :gender => :she,
+      :one_100 => 'ser', :few_100 => 'sery', :many_100 => 'serów', :gender_100 => :hi})
+    PolishNumber.translate(35.05, :currency => :COWS).should ==
+      "trzydzieści pięć krów i pięć serów"
+  end
+
 end
