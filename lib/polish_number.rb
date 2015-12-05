@@ -79,7 +79,16 @@ module PolishNumber
       result << ' '
       result << currency[classify(number.to_i, digits_i)]
     end
+    process_99_0(result, digits, options, formatted_number, currency)
+  end
 
+  def self.add_currency(name, hash)
+    CURRENCIES[name]=hash
+  end
+
+  private
+
+  def self.process_99_0(result, digits, options, formatted_number, currency)
     if options[:cents] == :words ||
         (options[:cents] == :auto && formatted_number[-2..-1] != '00')
       digits_cents = digits[-3..-1] if digits
@@ -116,12 +125,6 @@ module PolishNumber
     result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
     result.strip!
   end
-
-  def self.add_currency(name, hash)
-    CURRENCIES[name]=hash
-  end
-
-  private
 
   def self.process_0_999(digits, number, object)
     result = ''
