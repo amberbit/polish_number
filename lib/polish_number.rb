@@ -21,42 +21,86 @@ module PolishNumber
 
   MILLIONS = {:one => 'milion', :few => 'miliony', :many => 'milionów'}
 
+  CENTS = [:auto, :no, :words, :digits]
+
   CURRENCIES = {
-    :PLN => {:one => 'złoty', :few => 'złote', :many => 'złotych'}
+    :NO => {:one => '', :few => '', :many => '',
+            :one_100 => 'setna', :few_100 => 'setne', :many_100 => 'setnych'},
+    :PLN => {:one => 'złoty', :few => 'złote', :many => 'złotych',
+            :one_100 => 'grosz', :few_100 => 'grosze', :many_100 => 'groszy'},
+    :USD => { :one => 'dolar', :few => 'dolary', :many => 'dolarów',
+      :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
+    :EUR => { :one => 'euro', :few => 'euro', :many => 'euro', :gender => :it,
+      :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
+    :GBP => { :one => 'funt', :few => 'funty', :many => 'funtów',
+        :one_100 => 'pens', :few_100 => 'pensy', :many_100 => 'pensów'},
+    :CHF => { :one => 'frank', :few => 'franki', :many => 'franków',
+        :one_100 => 'centym', :few_100 => 'centymy', :many_100 => 'centymów'},
+    :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :she,
+        :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
   }
 
   def self.translate(number, options={})
     if options[:currency] && !CURRENCIES.has_key?(options[:currency])
       raise ArgumentError, "unknown :currency option '#{options[:currency].inspect}'. Choose one from: #{CURRENCIES.inspect}"
     end
+    if options[:cents] && !CENTS.include?(options[:cents])
+      raise ArgumentError, "unknown :cents option '#{options[:cents].inspect}'. Choose one from: #{CENTS.inspect}"
+    end
 
-    number = number.to_i
+    options[:cents] ||= :auto
+
+    number = number.to_i if options[:cents]==:no
 
     unless (0..999999999).include? number
       raise ArgumentError, 'number should be in 0..999999999 range'
     end
 
+    formatted_number = sprintf('%012.2f', number)
+    currency = CURRENCIES[options[:currency] || :NO]
+
     if number == 0
       result = ZERO.dup
     else
-      formatted_number = sprintf('%09.0f', number)
       digits = formatted_number.chars.map { |char| char.to_i }
+      digits_i = digits[0..8]
 
       result = ''
-      result << process_0_999(digits[0..2])
-      result << millions(number/1000000, digits[0..2])
+      result << process_0_999(digits[0..2], number, :hi)
+      result << millions(number.to_i/1000000, digits[0..2])
+      result.strip!
       result << ' '
-      result << process_0_999(digits[3..5])
-      result << thousands(number/1000, digits[3..5])
+      result << process_0_999(digits[3..5], number, :hi)
+      result << thousands(number.to_i/1000, digits[3..5])
+      result.strip!
       result << ' '
-      result << process_0_999(digits[6..9])
+      result << process_0_999(digits[6..8], number, currency[:gender] || :hi)
       result.strip!
     end
 
-    if options[:currency]
-      currency = CURRENCIES[options[:currency]]
+    if options[:currency] && !result.empty?
       result << ' '
-      result << currency[classify(number, digits)]
+      result << currency[classify(number.to_i, digits_i)]
+    end
+
+    if options[:cents] == :words ||
+        (options[:cents] == :auto && formatted_number[-2..-1] != '00')
+      digits_cents = digits[-3..-1] if digits
+      number_cents = formatted_number[-2..-1].to_i
+      result << ' i ' unless result.empty?
+      result << process_0_999(digits_cents, number_cents, currency[:gender_100] || :hi) if digits
+      result << ZERO.dup if formatted_number[-2..-1] == '00'
+      result.strip!
+      result << ' '
+      result << currency[classify(formatted_number[-2..-1].to_i, digits_cents, true)]
+    elsif options[:cents] == :digits
+      result << ' '
+      result << formatted_number[-2..-1]
+      result << '/100'
+    elsif options[:cents] == :digits
+      result << ' '
+      result << formatted_number[-2..-1]
+      result << '/100'
     end
 
     result
@@ -64,7 +108,7 @@ module PolishNumber
 
   private
 
-  def self.process_0_999(digits)
+  def self.process_0_999(digits, number, gender)
     result = ''
     result << HUNDREDS[digits[0]]
 
@@ -72,14 +116,22 @@ module PolishNumber
       result << TEENS[digits[2]]
     else
       result << TENS[digits[1]]
-      result << UNITIES[digits[2]]
+      if digits[2] == 2 && gender == :she
+        result << 'dwie '
+      elsif number == 1 && gender == :she
+        result << 'jedna '
+      elsif number == 1 && gender == :it
+        result << 'jedno '
+      else
+        result << UNITIES[digits[2]]
+      end
     end
 
     result
   end
 
   def self.thousands(number, digits)
-    if number == 0
+    if number == 0 || digits == [0, 0, 0]
       ''
     else
       THOUSANDS[classify(number, digits)]
@@ -87,20 +139,23 @@ module PolishNumber
   end
 
   def self.millions(number, digits)
-    if number == 0
+    if number == 0 || digits == [0, 0, 0]
       ''
     else
       MILLIONS[classify(number, digits)]
     end
   end
 
-  def self.classify(number, digits)
+  def self.classify(number, digits, cents=false)
     if number == 1
+      return :one_100 if cents
       :one
     # all numbers with 2, 3 or 4 at the end, but not teens
     elsif digits && (2..4).include?(digits[-1]) && digits[-2] != 1
+      return :few_100 if cents
       :few
     else
+      return :many_100 if cents
       :many
     end
   end
