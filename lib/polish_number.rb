@@ -76,10 +76,11 @@ module PolishNumber
     end
 
     if options[:currency] && !result.empty?
-      result << ' '
-      result << currency[classify(number.to_i, digits_i)]
+      result << ' ' + currency[classify(number.to_i, digits_i)]
     end
-    process_99_0(result, digits, options, formatted_number, currency)
+
+    process_99_0(result, digits, options, formatted_number[-2..-1], currency)
+
   end
 
   def self.add_currency(name, hash)
@@ -88,20 +89,20 @@ module PolishNumber
 
   private
 
-  def self.process_99_0(result, digits, options, formatted_number, currency)
+  def self.process_99_0(result, digits, options, formatted_sub_number, currency)
     if options[:cents] == :words ||
-        (options[:cents] == :auto && formatted_number[-2..-1] != '00')
+        (options[:cents] == :auto && formatted_sub_number != '00')
       digits_cents = digits[-3..-1] if digits
-      number_cents = formatted_number[-2..-1].to_i
+      number_cents = formatted_sub_number.to_i
       result << ' i ' unless result.empty?
       result << process_0_999(digits_cents, number_cents, currency[:gender_100] || :hi) if digits
-      result << ZERO.dup if formatted_number[-2..-1] == '00'
+      result << ZERO.dup if formatted_sub_number == '00'
       result.strip!
       result << ' '
-      result << currency[classify(formatted_number[-2..-1].to_i, digits_cents, true)]
+      result << currency[classify(formatted_sub_number.to_i, digits_cents, true)]
     elsif options[:cents] == :digits
       result << ' '
-      result << formatted_number[-2..-1]
+      result << formatted_sub_number
       result << '/100'
     end
 
