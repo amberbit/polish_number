@@ -33,7 +33,7 @@ Or install it yourself as:
     PolishNumber.translate(0.10, :currency => :PLN) #=> dziesięć groszy
     PolishNumber.translate(5.10, :currency => :PLN, :cents => :no ) #=> pięć złotych
     PolishNumber.translate(5, :currency => :PLN, :cents => :words ) #=> pięć złotych zero groszy
-    PolishNumber.translate(5, :currency => :PLN, :cents => :digit ) #=> pięć złotych 00/100
+    PolishNumber.translate(5, :currency => :PLN, :cents => :digits ) #=> pięć złotych 00/100
 
 ## Adding new currencies
 
