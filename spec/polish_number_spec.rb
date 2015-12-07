@@ -66,7 +66,7 @@ describe :PolishNumber do
       if number == number.to_i
         result = "#{translation[:number]} #{translation[:PLN]}"
       else
-        result = "#{translation[:number]} #{translation[:PLN]} i #{translation[:cents_word]} #{translation[:PLN_100]}"
+        result = "#{translation[:number]} #{translation[:PLN]}, #{translation[:cents_word]} #{translation[:PLN_100]}"
       end
       PolishNumber.translate(number, :currency => :PLN).should == result
     end
@@ -81,13 +81,23 @@ describe :PolishNumber do
 
     it "should translate #{number} to '#{translation[:number]} #{translation[:PLN]}' with currency :PLN and :cents => :words" do
       PolishNumber.translate(number, :currency => :PLN, :cents => :words).should ==
-          "#{translation[:number]} #{translation[:PLN]} i #{translation[:cents_word]} #{translation[:PLN_100]}"
+          "#{translation[:number]} #{translation[:PLN]}, #{translation[:cents_word]} #{translation[:PLN_100]}"
     end
 
   end
   it "should translate 0.50 to pięćdziesiąt setnych" do
     PolishNumber.translate(0.50).should ==
         "pięćdziesiąt setnych"
+  end
+
+  it "should translate 0.50 to pięćdziesiąt setnych with currency :PLN and :cents => :words" do
+    PolishNumber.translate(0.50, :currency => :PLN, :cents => :words).should ==
+        "zero złotych, pięćdziesiąt groszy"
+  end
+
+  it "should translate 0.50 to pięćdziesiąt setnych with currency :PLN and :cents => :digits" do
+    PolishNumber.translate(0.50, :currency => :PLN, :cents => :digits).should ==
+        "zero złotych 50/100"
   end
 
   it "should translate 1 :with currrency :EUR to jedno euro" do
@@ -146,7 +156,7 @@ describe :PolishNumber do
     PolishNumber.add_currency(:COWS, { :one => 'krowa', :few => 'krowy', :many => 'krów', :gender => :she,
       :one_100 => 'ser', :few_100 => 'sery', :many_100 => 'serów', :gender_100 => :hi})
     PolishNumber.translate(35.05, :currency => :COWS).should ==
-      "trzydzieści pięć krów i pięć serów"
+      "trzydzieści pięć krów, pięć serów"
   end
 
 end

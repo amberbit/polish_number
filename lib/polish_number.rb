@@ -84,7 +84,13 @@ module PolishNumber
         (options[:cents] == :auto && formatted_sub_number != '00')
       digits_cents = digits[-3..-1] if digits
       number_cents = formatted_sub_number.to_i
-      result << ' i ' unless result.empty?
+      unless result.empty?
+        if options[:currency]
+          result << ', '
+        else
+          result << ' i '
+        end
+      end
       result << process_0_999(digits_cents, number_cents, currency[:gender_100] || :hi) if digits
       result << ZERO.dup if formatted_sub_number == '00'
       result.strip!
@@ -100,7 +106,7 @@ module PolishNumber
   end
 
   def self.process_1_999999999(digits, options, number, currency)
-    if number == 0
+    if number == 0 || (number.to_i == 0 && [:words, :digits].include?(options[:cents]))
       result = ZERO.dup
     else
       result = ''
