@@ -26,6 +26,35 @@ Or install it yourself as:
     PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
     PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
 
+## Cents format
+
+    PolishNumber.translate(34.11) #=> trzydzieści cztery i jedenaście setnych
+    PolishNumber.translate(30.01, :currency => :PLN) #=> trzydzieści złote i jeden grosz
+    PolishNumber.translate(0.10, :currency => :PLN) #=> dziesięć groszy
+    PolishNumber.translate(5.10, :currency => :PLN, :cents => :no ) #=> pięć złotych
+    PolishNumber.translate(5, :currency => :PLN, :cents => :words ) #=> pięć złotych zero groszy
+    PolishNumber.translate(5, :currency => :PLN, :cents => :digits ) #=> pięć złotych 00/100
+
+## Adding new currencies
+
+    PolishNumber.add_currency(:COWS, { :one => 'krowa', :few => 'krowy',
+      :many => 'krów', :gender => :she,
+      :one_100 => 'ser', :few_100 => 'sery',
+      :many_100 => 'serów', :gender_100 => :hi})
+
+    PolishNumber.translate(35.05, :currency => :COWS) #=> trzydzieści pięć krów i pięć serów
+
+## Changelog
+
+ * 1.2.0 - Added billions support.
+           Fixed multiple bugs.
+           Added changelog to readme.
+           Added support for genders in currencies.
+           Added support for hundredth parts of number.(setne i grosze)
+           Remove "jeden" from million and thousand when only one.
+           Added support for adding new currencies.
+ * 1.1.0 - First changeloged version
+
 ## Contributing
 
 1. [Fork it](http://github.com/amberbit/polish_number/fork)
