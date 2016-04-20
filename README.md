@@ -26,21 +26,21 @@ Or install it yourself as:
     PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
     PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
 
-## Cents format
+## Fractions format
 
     PolishNumber.translate(34.11) #=> trzydzieści cztery i jedenaście setnych
     PolishNumber.translate(30.01, :currency => :PLN) #=> trzydzieści złote i jeden grosz
     PolishNumber.translate(0.10, :currency => :PLN) #=> dziesięć groszy
-    PolishNumber.translate(5.10, :currency => :PLN, :cents => :no ) #=> pięć złotych
-    PolishNumber.translate(5, :currency => :PLN, :cents => :words ) #=> pięć złotych zero groszy
-    PolishNumber.translate(5, :currency => :PLN, :cents => :digits ) #=> pięć złotych 00/100
+    PolishNumber.translate(5.10, :currency => :PLN, :fractions => :none) #=> pięć złotych
+    PolishNumber.translate(5, :currency => :PLN, :fractions => :words) #=> pięć złotych zero groszy
+    PolishNumber.translate(5, :currency => :PLN, :fractions => :digits) #=> pięć złotych 00/100
 
 ## Adding new currencies
 
     PolishNumber.add_currency(:COWS, { :one => 'krowa', :few => 'krowy',
-      :many => 'krów', :gender => :she,
+      :many => 'krów', :gender => :female,
       :one_100 => 'ser', :few_100 => 'sery',
-      :many_100 => 'serów', :gender_100 => :hi})
+      :many_100 => 'serów', :gender_100 => :male})
 
     PolishNumber.translate(35.05, :currency => :COWS) #=> trzydzieści pięć krów i pięć serów
 

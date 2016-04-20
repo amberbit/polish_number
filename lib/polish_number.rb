@@ -23,23 +23,23 @@ module PolishNumber
 
   BILLIONS = {:one => 'miliard', :few => 'miliardy', :many => 'miliardów'}
 
-  CENTS = [:auto, :no, :words, :digits]
+  CENTS = [:auto, :none, :words, :digits]
 
   CURRENCIES = {
-    :NO => {:one => '', :few => '', :many => '',
-            :one_100 => 'setna', :few_100 => 'setne', :many_100 => 'setnych', :gender_100 => :she},
+    :NONE => {:one => '', :few => '', :many => '',
+            :one_100 => 'setna', :few_100 => 'setne', :many_100 => 'setnych', :gender_100 => :female},
     :PLN => {:one => 'złoty', :few => 'złote', :many => 'złotych',
             :one_100 => 'grosz', :few_100 => 'grosze', :many_100 => 'groszy'},
     :USD => { :one => 'dolar', :few => 'dolary', :many => 'dolarów',
             :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
-    :EUR => { :one => 'euro', :few => 'euro', :many => 'euro', :gender => :it,
+    :EUR => { :one => 'euro', :few => 'euro', :many => 'euro', :gender => :neutral,
             :one_100 => 'cent', :few_100 => 'centy', :many_100 => 'centów'},
     :GBP => { :one => 'funt', :few => 'funty', :many => 'funtów',
             :one_100 => 'pens', :few_100 => 'pensy', :many_100 => 'pensów'},
     :CHF => { :one => 'frank', :few => 'franki', :many => 'franków',
             :one_100 => 'centym', :few_100 => 'centymy', :many_100 => 'centymów'},
-    :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :she,
-            :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :it}
+    :SEK => { :one => 'korona', :few => 'korony', :many => 'koron', :gender => :female,
+            :one_100 => 'öre', :few_100 => 'öre', :many_100 => 'öre', :gender_100 => :neutral}
   }
 
   def self.validate(number, options)
@@ -48,8 +48,8 @@ module PolishNumber
                   " Choose one from: #{CURRENCIES.inspect}"
     end
 
-    if options[:cents] && !CENTS.include?(options[:cents])
-      raise ArgumentError, "Unknown :cents option '#{options[:cents].inspect}'." +
+    if options[:fractions] && !CENTS.include?(options[:fractions])
+      raise ArgumentError, "Unknown :fractions option '#{options[:fractions].inspect}'." +
                   " Choose one from: #{CENTS.inspect}"
     end
 
@@ -63,10 +63,10 @@ module PolishNumber
 
     options = validate(number, options)
 
-    options[:cents] ||= :auto
-    number = number.to_i if options[:cents]==:no
+    options[:fractions] ||= :auto
+    number = number.to_i if options[:fractions]==:none
     formatted_number = sprintf('%015.2f', number)
-    currency = CURRENCIES[options[:currency] || :NO]
+    currency = CURRENCIES[options[:currency] || :NONE]
 
     digits = formatted_number.chars.map { |char| char.to_i }
     result = process_1_999999999999(digits[0..11], options, number, currency)
@@ -82,8 +82,8 @@ module PolishNumber
   private
 
   def self.process_99_0(result, digits, options, formatted_sub_number, currency)
-    if options[:cents] == :words ||
-        (options[:cents] == :auto && formatted_sub_number != '00')
+    if options[:fractions] == :words ||
+        (options[:fractions] == :auto && formatted_sub_number != '00')
       digits_cents = digits[-3..-1] if digits
       number_cents = formatted_sub_number.to_i
       unless result.empty?
@@ -93,12 +93,12 @@ module PolishNumber
           result << ' i '
         end
       end
-      result << process_0_999(digits_cents, number_cents, currency[:gender_100] || :hi) if digits
+      result << process_0_999(digits_cents, number_cents, currency[:gender_100] || :male) if digits
       result << ZERO.dup if formatted_sub_number == '00'
       result.strip!
       result << ' '
       result << currency[classify(formatted_sub_number.to_i, digits_cents, true)]
-    elsif options[:cents] == :digits
+    elsif options[:fractions] == :digits
       result << ' '
       result << formatted_sub_number
       result << '/100'
@@ -108,7 +108,7 @@ module PolishNumber
   end
 
   def self.process_1_999999999999(digits, options, number, currency)
-    if number == 0 || (number.to_i == 0 && [:words, :digits].include?(options[:cents]))
+    if number == 0 || (number.to_i == 0 && [:words, :digits].include?(options[:fractions]))
       result = ZERO.dup
     else
       result = ''
@@ -124,7 +124,7 @@ module PolishNumber
       result << thousands(number.to_i/1000, digits[6..8])
       result.strip!
       result << ' '
-      result << process_0_999(digits[9..11], number, currency[:gender] || :hi)
+      result << process_0_999(digits[9..11], number, currency[:gender] || :male)
       result.strip!
     end
 
@@ -149,11 +149,11 @@ module PolishNumber
   end
 
   def self.process_0_9(digits, number, object)
-    if digits[2] == 2 && object == :she
+    if digits[2] == 2 && object == :female
       'dwie '
-    elsif number == 1 && object == :she
+    elsif number == 1 && object == :female
       'jedna '
-    elsif number == 1 && object == :it
+    elsif number == 1 && object == :neutral
       'jedno '
     elsif digits == [0,0,1] && object == :number
       ''
