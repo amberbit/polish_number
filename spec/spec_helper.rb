@@ -10,6 +10,12 @@ def silently(&block)
 end
 
 require 'polish_number'
+require 'polish_number/classify_numbers'
+require 'polish_number/process'
+require 'polish_number/process_decimal_part'
+require 'polish_number/process_integer_part'
+require 'polish_number/process_number'
+require 'polish_number/process_thousands'
 
 silently do
   require 'rubygems'

@@ -1,5 +1,3 @@
-# Polish Number [![Code Climate](https://codeclimate.com/github/amberbit/polish_number.png)](https://codeclimate.com/github/amberbit/polish_number) [![Build Status](https://travis-ci.org/amberbit/polish_number.png?branch=master)](https://travis-ci.org/amberbit/polish_number) [![Test Coverage](https://codeclimate.com/github/amberbit/polish_number/badges/coverage.svg)](https://codeclimate.com/github/amberbit/polish_number)
-
 Translates numbers to Polish words.
 
 ## Installation
@@ -22,9 +20,10 @@ Or install it yourself as:
 
     require 'polish_number'
 
-    PolishNumber.translate(1234) #=> tysiąc dwieście trzydzieści cztery
-    PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
-    PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
+    PolishNumber.in_words(1234) #=> tysiąc dwieście trzydzieści cztery
+    PolishNumber.in_words(34) #=> trzydzieści cztery złote
+    PolishNumber.in_words(12) #=> dwanaście złotych
+    PolishNumber.in_words('100.12') #=> sto złotych dwanaście groszy
 
 ## Contributing
 
