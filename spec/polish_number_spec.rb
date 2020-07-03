@@ -64,7 +64,6 @@ describe :PolishNumber do
     34 => 'trzydzieści cztery złote',
     35 => 'trzydzieści pięć złotych',
     45 => 'czterdzieści pięć złotych',
-    32 => 'trzydzieści dwa złote',
     99 => 'dziewięćdziesiąt dziewięć złotych',
     100 => 'sto złotych',
     101 => 'sto jeden złotych',
@@ -80,15 +79,19 @@ describe :PolishNumber do
     1222 => 'jeden tysiąc dwieście dwadzieścia dwa złote',
     2415 => 'dwa tysiące czterysta piętnaście złotych',
     5000 => 'pięć tysięcy złotych',
-    10000 => 'dziesięć tysięcy złotych',
-    22141 => 'dwadzieścia dwa tysiące sto czterdzieści jeden złotych',
-    123754 => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote',
-    999999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
-    1999999 => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
-    5123754 => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote'
+    10_000 => 'dziesięć tysięcy złotych',
+    22_141 => 'dwadzieścia dwa tysiące sto czterdzieści jeden złotych',
+    123_754 => 'sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote',
+    999_999 => 'dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
+    1_999_999 => 'jeden milion dziewięćset dziewięćdziesiąt dziewięć tysięcy dziewięćset dziewięćdziesiąt dziewięć złotych',
+    5_123_754 => 'pięć milionów sto dwadzieścia trzy tysiące siedemset pięćdziesiąt cztery złote',
+    10.5 => 'dziesięć złotych i pięćdziesiąt groszy',
+    10.05 => 'dziesięć złotych i pięć groszy',
+    111.32 => 'sto jedenaście złotych i trzydzieści dwa grosze',
+    0.01 => 'zero złotych i jeden grosz'
   }.each do |number, translation|
     it "should translate #{number} to '#{translation}'" do
-      PolishNumber.translate(number, :currency => :PLN).should == translation
+      PolishNumber.translate(number, currency: :PLN).should == translation
     end
   end
 
@@ -101,7 +104,7 @@ describe :PolishNumber do
   end
 
   it "should raise ArgumentError when currency is unknown" do
-    lambda { PolishNumber.translate(1_000_000, :currency => :ABC) }.
+    lambda { PolishNumber.translate(1_000_000, currency: :ABC) }.
       should.raise(ArgumentError)
   end
 end

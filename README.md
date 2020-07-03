@@ -23,8 +23,10 @@ Or install it yourself as:
     require 'polish_number'
 
     PolishNumber.translate(1234) #=> tysiąc dwieście trzydzieści cztery
-    PolishNumber.translate(34, :currency => :PLN) #=> trzydzieści cztery złote
-    PolishNumber.translate(12, :currency => :PLN) #=> dwanaście złotych
+    PolishNumber.translate(34, currency: :PLN) #=> trzydzieści cztery złote
+    PolishNumber.translate(12, currency: :PLN) #=> dwanaście złotych
+    PolishNumber.translate(12.10, currency: :PLN) #=> dwanaście złotych i dziesięc groszy
+    PolishNumber.translate(0.01, currency: :PLN) #=> zero złotych i jeden grosz
 
 ## Contributing
 
