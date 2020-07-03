@@ -1,5 +1,5 @@
-require "bundler/gem_tasks"
-require "rake/testtask"
+require 'bundler/gem_tasks'
+require 'rake/testtask'
 
 Rake::TestTask.new do |test|
   test.ruby_opts  << "-w"
@@ -8,4 +8,4 @@ Rake::TestTask.new do |test|
 end
 
 desc "Run tests"
-task :default => :test
+task default: :test
