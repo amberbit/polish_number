@@ -64,7 +64,6 @@ describe :PolishNumber do
     34 => 'trzydzieści cztery złote',
     35 => 'trzydzieści pięć złotych',
     45 => 'czterdzieści pięć złotych',
-    32 => 'trzydzieści dwa złote',
     99 => 'dziewięćdziesiąt dziewięć złotych',
     100 => 'sto złotych',
     101 => 'sto jeden złotych',

@@ -1,4 +1,4 @@
-# Polish Number [![Code Climate](https://codeclimate.com/github/amberbit/polish_number.png)](https://codeclimate.com/github/amberbit/polish_number) [![Build Status](https://travis-ci.org/amberbit/polish_number.png?branch=master)](https://travis-ci.org/amberbit/polish_number) [![Test Coverage](https://codeclimate.com/github/amberbit/polish_number/badges/coverage.svg)](https://codeclimate.com/github/amberbit/polish_number)
+# Polish Number [![Build Status](https://travis-ci.org/amberbit/polish_number.png?branch=master)](https://travis-ci.org/amberbit/polish_number)
 
 Translates numbers to Polish words.
 
@@ -30,7 +30,7 @@ Or install it yourself as:
 
 1. [Fork it](http://github.com/amberbit/polish_number/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
+3. Commit your changes (`git commit`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
