@@ -1,4 +1,4 @@
-# Polish Number [![Build Status](https://travis-ci.org/amberbit/polish_number.png?branch=master)](https://travis-ci.org/amberbit/polish_number)
+# Polish Number [![Build Status](https://app.travis-ci.com/amberbit/polish_number.svg?branch=master)](https://app.travis-ci.com/amberbit/polish_number)
 
 Translates numbers to Polish words.
 
